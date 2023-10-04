@@ -1,71 +1,61 @@
 ---
 title: Introduction
-description: "Welcome to the home of your new documentation"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.svg"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.svg"
-  alt="Hero Dark"
-/>
+Thanks to [Mintlify](https://www.mintlify.com) for generously hosting this documentation.
 
-## Setting up
 
-The first step to world-class documentation is setting up your editing environnments.
+# express-rate-limit
+Express-rate-limit is a basic rate-limiting middleware for [Express](http://expressjs.com/), used to
+limit repeated requests to public APIs and/or endpoints such as password reset.
+Plays nice with
+[express-slow-down](https://www.npmjs.com/package/express-slow-down). 
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+## Use Cases
 
-## Make it yours
+### Abuse Prevention
 
-Update your docs to your brand and add valuable content for the best user conversion.
+The default `MemoryStore` is probably fine.
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/components/accordion"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/showcase"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+### API Rate Limit Enforcement
+
+The default `MemoryStore` stores the hit counts for clients in memory, and is
+thus unsuitable for use when running multiple servers or processes.
+
+If you have multiple processes on a single server (via the
+[node:cluster](https://nodejs.org/api/cluster.html) module), the
+[`cluster-memory-store`](https://npmjs.com/package/@express-rate-limit/cluster-memory-store)
+will keep them all in sync without needing an external data store.
+
+If you have multiple servers, or want to maintain state across app restarts, use
+an external data store such as
+[redis](https://npmjs.com/package/rate-limit-redis),
+[memcached](https://npmjs.org/package/rate-limit-memcached), [etc.](#store).
+
+### Alternate Rate Limiters
+
+This module was designed to only handle the basics and didn't even support
+external stores initially. These other options all are excellent pieces of
+software and may be more appropriate for some situations:
+
+- [`rate-limiter-flexible`](https://www.npmjs.com/package/rate-limiter-flexible)
+- [`express-brute`](https://www.npmjs.com/package/express-brute)
+- [`rate-limiter`](https://www.npmjs.com/package/express-limiter)
+
+
+## Issues and Contributing
+
+If you encounter a bug or want to see something added/changed, please go ahead
+and
+[open an issue](https://github.com/nfriexpress-rate-limitedly/express-rate-limit/issues/new)!
+If you need help with something, feel free to
+[start a discussion](https://github.com/express-rate-limit/express-rate-limit/discussions/new)!
+
+If you wish to contribute to the library, thanks! First, please read
+[the contributing guide](/guides/contributing). Then you can pick up any issue and
+fix/implement it!
+
+## License
+
+MIT © [Nathan Friedly](http://nfriedly.com/),
+[Vedant K](https://github.com/gamemaker1)
